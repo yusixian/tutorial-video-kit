@@ -7,7 +7,7 @@ cd video
 pnpm publish-kit   # → publish/<ep>.md 和 publish/compilation.md
 ```
 
-每个文件里有标题、简介、置顶评论、标签和发布前检查。链接、交流群、资料包、BGM 署名这些在 `video/scripts/kits.ts` 里配置，模板里是 `example.com` 占位，发布前换成自己的。
+每个文件里有标题、简介、置顶评论、标签和发布前检查。标题、简介、标签、链接、交流群、资料包在 `video/scripts/kits.ts` 里配置，模板里是 `example.com` 占位，发布前换成自己的；BGM 的署名写在 `video/src/script/music.ts`。
 
 ## 简介和置顶评论
 
@@ -24,7 +24,7 @@ pnpm publish-kit   # → publish/<ep>.md 和 publish/compilation.md
 
 ## 封面
 
-- 分集和合集各出 16:10、16:9、4:3 三个比例。B 站首页推荐位用 4:3，个人空间用 16:9，投稿时取消「双比例同步改动」分开传。
+- `pnpm covers` 给分集和合集各出 16:9、4:3 两个比例，要别的比例就在 `video/src/Root.tsx` 的 `COVER_SIZES` 里加一行。B 站首页推荐位用 4:3，个人空间用 16:9，投稿时取消「双比例同步改动」分开传。
 - 缩成信息流的小图再看一次：大字够不够大，中间有没有大块空白。空白可以用主图放大、模糊、压暗铺满背景。
 - 角色贴纸别单独飘在空白里，让它和画面里的元素有关系（指着主图、靠着贴纸）。
 

@@ -29,13 +29,21 @@ const named = args.filter((arg, i) => !arg.startsWith('--') && args[i - 1] !== '
 /** Fail before bundling when a file the compositions load is missing, instead of mid-render. */
 const checkAssets = (picked: typeof episodes) => {
   const needed = new Map<string, string>()
+  let lines = 0
+  let silent = 0
   for (const episode of picked) {
-    for (const scene of timeEpisode(episode).scenes) for (const line of scene.lines) if (line.audio) needed.set(line.audio, 'run `pnpm tts` to restore the narration')
+    for (const scene of timeEpisode(episode).scenes)
+      for (const line of scene.lines) {
+        lines++
+        if (line.audio) needed.set(line.audio, 'run `pnpm tts` to restore the narration')
+        else silent++
+      }
     for (const { track } of episode.music ?? []) needed.set(TRACKS[track].file, 'run `pnpm sfx`, or add the track file')
   }
   for (const name of ['click', 'pop', 'whoosh', 'chime']) needed.set(`audio/sfx/${name}.wav`, 'run `pnpm sfx`')
   const missing = [...needed].filter(([file]) => !fs.existsSync(path.join(PUBLIC, file)))
   if (missing.length) throw new Error(`missing files in public/:\n${missing.map(([file, fix]) => `  ${file} (${fix})`).join('\n')}`)
+  if (silent) console.warn(`${silent} of ${lines} lines have no narration yet; they render silent and are timed by reading speed. Run \`pnpm tts\` first for a voiced render.`)
 }
 
 const logProgress = (name: string) => {
@@ -48,7 +56,7 @@ const logProgress = (name: string) => {
 }
 
 async function main() {
-  const unknown = named.filter(id => id !== 'all' && !episodes.some(e => e.id === id))
+  const unknown = named.filter(id => !(covers && id === 'all') && !episodes.some(e => e.id === id))
   if (unknown.length) throw new Error(`unknown episodes: ${unknown.join(', ')}`)
   if (!Number.isInteger(concurrency) || concurrency < 1) throw new Error('--concurrency takes a positive integer')
   const picked = episodes.filter(e => !named.length || named.includes(e.id))

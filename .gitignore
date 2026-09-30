@@ -11,6 +11,8 @@ voice/
 video/.remotion/
 video/public/audio/tts/
 video/public/audio/sfx/
+# Licensed music usually may not be redistributed; remove this line if yours may
+video/public/audio/bgm/
 tts-lab/audition/out/
 tts-lab/audition/page/
 

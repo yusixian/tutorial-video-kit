@@ -34,7 +34,7 @@ video/src/script/ep*.ts ──► pnpm tts ──► tts-manifest.json（每句�
 
 ## 快速开始
 
-需要：Node 22+、pnpm 10、ffmpeg（试听台要带 libmp3lame）、[uv](https://docs.astral.sh/uv/)（跑 edge-tts）、ImageMagick 7 的 `magick`（逐字稿拼图）。画面用系统字体，macOS 自带苹方；想在不同机器上出一样的画面，装上 Noto Sans SC。第一次渲染时 Remotion 会自动下载 Chrome Headless Shell（约 94 MB）。
+需要：Node 22+、pnpm 10、ffmpeg 5.1 以上（逐字稿截图用到 `-fps_mode`；试听台要带 libmp3lame）、[uv](https://docs.astral.sh/uv/)（跑 edge-tts）、ImageMagick 7 的 `magick`（逐字稿拼图）。画面用系统字体，macOS 自带苹方；想在不同机器上出一样的画面，装上 Noto Sans SC。第一次渲染时 Remotion 会自动下载 Chrome Headless Shell（约 94 MB）。
 
 ```sh
 cd video
@@ -55,7 +55,7 @@ pnpm prompter                  # 提词稿 → voice/（加 --pdf 用本机 Chro
 pnpm transcript:lark push      # 可选：推送飞书逐字稿，需要先登录 lark-cli
 ```
 
-不跑 `pnpm tts` 也能预览，时间轴会按阅读速度估算每句时长，只是没有声音；`pnpm render` 会先检查配音文件，缺了会提示你跑 `pnpm tts`。配音音频不进 git，克隆下来的清单是空的 `{}`。
+不跑 `pnpm tts` 也能预览和渲染，时间轴会按阅读速度估算每句时长，只是没有声音。`pnpm render` 会先检查清单里登记过的配音、配乐和音效文件，缺了会提示该跑什么命令；还没配音的句子会渲成无声，终端会提醒。配音音频不进 git，克隆下来的清单是空的 `{}`。
 
 试听台：
 
@@ -71,16 +71,16 @@ python3 build_page.py --pack   # page/index.html，加 --pack 再出一个内嵌
 
 1. `video/src/config.ts`：系列名、版本标记、语言、飞书逐字稿的标题。
 2. `video/src/script/`：照着 `ep1.ts` 写自己的分集，在 `episodes.ts` 里登记。
-3. `video/src/scenes/`：每个场景一个组件，在该集的 `index.ts` 里注册，再把这个注册表加进 `src/episode/entries.ts`（逐字稿靠它找到负责画面的文件）。界面演示照着 `scenes/ep1/app.tsx` 用 JSX 画一个假的页面，控件坐标写成常量，给镜头、光标和聚光框用。
+3. `video/src/scenes/`：每个场景一个组件，在该集的 `index.ts` 里按场景 id 注册（逐字稿读这个文件，找出每个场景由哪个组件、哪个文件负责），再把注册表加进 `src/episode/entries.ts`（Remotion 合成用）。界面演示照着 `scenes/ep1/app.tsx` 用 JSX 画一个假的页面，控件坐标写成常量，给镜头、光标和聚光框用。
 4. `video/scripts/spoken-text.ts`：你的多音字和缩写读法。
 5. `video/scripts/kits.ts`：投稿标题、简介、标签、链接（示例是 `example.com` 占位，没换完之前 `pnpm publish-kit` 会在发布检查里提醒）。
-6. `video/src/script/music.ts`：配乐文件和署名。示例配乐是代码合成的，换成有授权的曲子放进 `public/audio/bgm/`。
+6. `video/src/script/music.ts`：配乐文件和署名。示例配乐是代码合成的，换成有授权的曲子放进 `public/audio/bgm/`（这个目录默认不进 git，多数曲库不允许再分发）。
 7. 用 [`prompts/01-kickoff.md`](prompts/01-kickoff.md) 的提示词起手，让 agent 先写需求文档和 `GOAL.md`。
 
 ## 许可
 
 本仓库的代码和文档使用 [MIT](LICENSE)。
 
-依赖的 Remotion 有自己的许可证，不是 MIT：个人（包括商用）、3 人以内的团队、非营利组织可以免费用，人数更多的公司需要购买公司授权，见 [Remotion 许可证说明](https://www.remotion.dev/docs/license/faq)。
+依赖的 Remotion 有自己的许可证，不是 MIT：个人（包括商用）、雇员不超过 3 人的营利性组织、非营利组织可以免费用；人数按整个组织算，大公司里的三人小组也不算。其他营利性组织需要购买公司授权，见 [Remotion 许可证说明](https://www.remotion.dev/docs/license/faq)。
 
 示例里没有第三方素材，音效和配乐都是代码合成的。你自己放进去的图片、音乐、字体和声音，按它们各自的授权使用；配音用了谁的声音、用的哪家 TTS，也要看对应的条款（见 [TTS 选型](docs/tts-selection.md#授权和标注)）。
