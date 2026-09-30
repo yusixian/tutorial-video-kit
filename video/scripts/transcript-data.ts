@@ -44,9 +44,9 @@ const componentFiles = (episodeId: string) => {
   if (!fs.existsSync(registry)) return map
   const source = fs.readFileSync(registry, 'utf8')
   const imported = new Map<string, string>()
-  for (const [, names, from] of source.matchAll(/import\s*\{([^}]+)\}\s*from\s*'\.\/([\w-]+)'/g))
+  for (const [, names, from] of source.matchAll(/import\s*\{([^}]+)\}\s*from\s*['"]\.\/([\w-]+)['"]/g))
     for (const name of names.split(',').map(n => n.trim().replace(/^type\s+/, '')).filter(Boolean)) imported.set(name, `${from}.tsx`)
-  for (const [, scene, component] of source.matchAll(/'([\w-]+)':\s*\{\s*component:\s*(\w+)/g))
+  for (const [, scene, component] of source.matchAll(/['"]([\w-]+)['"]:\s*\{[^}]*?\bcomponent:\s*(\w+)/g))
     map.set(scene, { component, file: path.relative(ROOT, path.join(dir, imported.get(component) ?? path.basename(registry))) })
   return map
 }

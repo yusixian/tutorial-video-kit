@@ -82,7 +82,7 @@ pnpm covers                           # 封面静帧 → out/covers/
 ```
 
 - 一次只跑一个渲染。
-- `pnpm delivery-check --timing-only` 只检查时间轴：句子 id 唯一、口播不超出场景、句子不重叠、字幕块不短于 1.2 秒。
+- `pnpm delivery-check --timing-only` 只检查时间轴：句子 id 唯一、口播不超出场景、句子不重叠、字幕块不短于 1.2 秒（字幕块要配过音、有了逐词时间戳才会检查）。
 - 检查通过只说明文件没问题，人还要从头看一遍、听一遍。
 
 渲染慢的原因和提速办法见 [渲染提速](render-performance.md)。
