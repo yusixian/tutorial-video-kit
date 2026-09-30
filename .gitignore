@@ -1,0 +1,19 @@
+node_modules/
+.DS_Store
+*.log
+
+# Rendered and generated output
+out/
+transcript/
+publish/
+voice/
+.cache/
+video/.remotion/
+video/public/audio/tts/
+video/public/audio/sfx/
+tts-lab/audition/out/
+tts-lab/audition/page/
+
+# Local secrets
+.env
+.env.*

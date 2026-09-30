@@ -1,0 +1,36 @@
+{
+  "title": "配音试听",
+  "intro": "同一组句子，每个引擎念一遍，只比声音本身。",
+  "loudness": -18,
+  "cases": [
+    {
+      "id": "pipeline",
+      "text": "这套模板把一条教程视频拆成五步：写脚本、配音、排时间线、渲染，最后交付。",
+      "hint": "整体语气和节奏；五个步骤之间的停顿自不自然"
+    },
+    {
+      "id": "numbers",
+      "text": "成片是 1080p、30 fps，响度统一到 -15 LUFS。",
+      "hint": "数字、单位和英文缩写各怎么念"
+    },
+    {
+      "id": "polyphone",
+      "text": "多音字容易读错，比如把脚本当成数据来写。",
+      "hint": "「当成」应该念 dàng chéng"
+    }
+  ],
+  "engines": [
+    {
+      "id": "edge-normal",
+      "title": "Edge TTS · 晓晓（原速）",
+      "note": "免费在线音色，作对照",
+      "dir": "out/edge-normal"
+    },
+    {
+      "id": "edge-fast",
+      "title": "Edge TTS · 晓晓（+30%）",
+      "note": "同一音色提速，听语速的影响",
+      "dir": "out/edge-fast"
+    }
+  ]
+}

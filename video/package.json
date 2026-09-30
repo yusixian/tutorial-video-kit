@@ -1,0 +1,49 @@
+{
+  "name": "tutorial-video-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "studio": "remotion studio",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test \"src/**/*.test.ts\"",
+    "postinstall": "tsx scripts/sfx.ts",
+    "sfx": "tsx scripts/sfx.ts",
+    "tts": "tsx scripts/tts.ts",
+    "timing": "tsx scripts/timing.ts",
+    "render": "tsx scripts/render.ts",
+    "covers": "tsx scripts/render.ts --covers",
+    "finalize": "tsx scripts/finalize.ts",
+    "compilation": "tsx scripts/compilation.ts",
+    "delivery-check": "tsx scripts/delivery-check.ts",
+    "transcript": "tsx scripts/transcript.ts",
+    "transcript:lark": "tsx scripts/transcript-lark.ts",
+    "publish-kit": "tsx scripts/publish.ts",
+    "prompter": "tsx scripts/prompter.ts"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "@remotion/media": "4.0.529",
+    "@remotion/renderer": "4.0.529",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "4.0.529",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "playwright-core": "^1.63.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
